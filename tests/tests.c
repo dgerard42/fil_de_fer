@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 19:45:10 by dgerard           #+#    #+#             */
-/*   Updated: 2017/05/24 17:07:34 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/05/26 12:50:19 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int				main(void)
 {
 	void	*mlx;
 	void	*window;
-	int		p1[2] = {100, 100};
-	int		p2[2] = {200, 200};
+	int		p1[2] = {50, 50};
+	int		p2[2] = {75, 400};
 	int		slope;
 	int		yinter;
 	int		color = 0xFFFFFF;

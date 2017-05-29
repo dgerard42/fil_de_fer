@@ -6,15 +6,17 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 21:08:33 by dgerard           #+#    #+#             */
-/*   Updated: 2017/05/24 15:35:36 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/05/28 12:33:22 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-#include "minilibx/mlx.h"
-#include "libft/libft.h"
+#include "libs/minilibx/mlx.h"
+#include "libs/libft/libft.h"
+
+
 
 #define SCALE 100
 
