@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libgfx.h                                           :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/28 12:33:49 by dgerard           #+#    #+#             */
-/*   Updated: 2017/05/28 18:32:01 by dgerard          ###   ########.fr       */
+/*   Created: 2017/05/28 18:31:45 by dgerard           #+#    #+#             */
+/*   Updated: 2017/05/28 18:31:58 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBGFX_H
-# define LIBGFX_H
-
-typedef struct	s_coords
+int			main(int argc, char **argv)
 {
-	int			x0;
-	int			y0;
-	int			x1;
-	int			y1;
-	int			rise;
-	int			run;
-}				t_coords;
+	t_env	*env;
 
-typedef	struct	s_env
-{
-	void		*mlx;
-	void		*window;
-	void		*image;
-	int			win_len;
-	int			win_hi;
-	int			color;
-}				t_env;
-
-#endif
+	env.mlx = mlx_init();
+	read_file(argv[1]);
+	env.color = 0xFFFFFF;
+	env.image = mlx_new_image(env.mlx, env.win_len, env.win_hi, env.color);
+}

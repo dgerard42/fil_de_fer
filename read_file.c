@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libgfx.h                                           :+:      :+:    :+:   */
+/*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/28 12:33:49 by dgerard           #+#    #+#             */
-/*   Updated: 2017/05/28 18:32:01 by dgerard          ###   ########.fr       */
+/*   Created: 2017/05/28 19:36:34 by dgerard           #+#    #+#             */
+/*   Updated: 2017/05/28 19:36:37 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBGFX_H
-# define LIBGFX_H
+#include "fdf.h"
 
-typedef struct	s_coords
+int				**read_file(char *filename)
 {
-	int			x0;
-	int			y0;
-	int			x1;
-	int			y1;
-	int			rise;
-	int			run;
-}				t_coords;
+	int		y;
+	int		x;
+	int		fd;
+	char	*line;
+	int		**map;
 
-typedef	struct	s_env
-{
-	void		*mlx;
-	void		*window;
-	void		*image;
-	int			win_len;
-	int			win_hi;
-	int			color;
-}				t_env;
-
-#endif
+	line = NULL;
+	fd = open(filename, O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+		y++;
+	while(line[x])
+		x++;
+	close(fd);
+	ft_2dintarraynew(y, x);
+	
+}
