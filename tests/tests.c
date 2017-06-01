@@ -23,9 +23,9 @@ int			main(void)
 	y = 42;
 	mlx = mlx_init();
 	window = mlx_new_window(mlx, 300, 300, "🜞 fils de fer 🜞");
-	
+
 	while (y < 142)
-	{	
+	{
 		x = 42;
 		while (x < 142)
 		{
@@ -52,7 +52,7 @@ int			main(void)
 	mlx = mlx_init();
 	window = mlx_new_window(mlx, 300, 600, "🜞 fils de fer 🜞");
 	while (y < 420)
-	{	
+	{
 		x = 42;
 		while (x < 142)
 		{
@@ -76,7 +76,7 @@ int				main(void)
 	int		slope;
 	int		yinter;
 	int		color = 0xFFFFFF;
-	
+
 	slope = ((p2[1] - p1[1]) / (p2[0] - p1[0]));
 	yinter = (p1[1] - (slope * p1[0]));
 	mlx = mlx_init();
