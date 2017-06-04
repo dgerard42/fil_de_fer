@@ -14,7 +14,7 @@
 
 int			main(int argc, char **argv)
 {
-	t_env	*env;
+	t_env	env;
 
 	env.mlx = mlx_init();
 	env.map = read_file(argv[1], env);

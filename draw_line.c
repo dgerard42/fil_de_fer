@@ -24,10 +24,11 @@ void				draw_line(t_env *env, t_drw *drw)
 	drw->run = abs((drw->x1) - (drw->x0));
 	drop[0] = abs(drw->run * 2);
 	drop[1] = abs(drw->rise * 2);
-	(drw->run == 0) ? (adjust = 0) : (adjust = ((drw->rise/drw->run) >= 0) ? 1 : -1);
+//	(drw->run == 0) ? (adjust = 0) : (adjust = ((drw->rise/drw->run) >= 0) ? 1 : -1);
+	
 	while (drw->run > drw->rise && drw->y0 < drw->y1)
 	{
-		printf("hruehreuh\n");
+		printf("loop 1\n");
 		mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0, 0x0000FF);
 		drw->x0++;
 		bucket += drop[1];
@@ -39,7 +40,7 @@ void				draw_line(t_env *env, t_drw *drw)
 	}
 	while (drw->rise > drw->run && drw->x0 < drw->x1)
 	{
-		printf("ieuhrewihr\n");
+		printf("loop 2\n");
 		mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0, 0x0000FF);
 		drw->y0++;
 		bucket += drop[0];
@@ -57,8 +58,6 @@ int					main(void)
 	t_drw drw;
 	t_env env;
 
-	//drw = ft_memalloc(sizeof(t_drw));
-	//env = ft_memalloc(sizeof(t_env));
 	env.mlx = mlx_init();
 	env.window = mlx_new_window(env.mlx, WIN_LEN, WIN_HI, "hullo");
 	drw.x0 = 200;
