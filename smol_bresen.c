@@ -16,12 +16,12 @@ void				draw_line(t_coords *coords)
 {
 	int *check[2];
 	int	*adjust[2];
-	
+
 	coords.rise = -abs(coords.b1 - coords.a1);
 	coords.run = abs(coords.a0 - coords.b0);
 	check[0] = coords.rise + coords.run;
-	adjust[0] = 
-	adjust[1] = 
+	adjust[0] =
+	adjust[1] =
 	while (1)
 	{
 		place_pixel(a0,a1);
@@ -33,7 +33,5 @@ void				draw_line(t_coords *coords)
 			check[0] += coords.rise;
 			coords.a0 += adjust[0];
 		}
-		
-
 	}
 }
