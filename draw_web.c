@@ -96,7 +96,7 @@ void			draw_web(t_env *env)
 				scale(env);
 				rotate(env);
 				project(env, drw);
-				draw_line(drw);
+				draw_line(env, drw);
 				x++;
 			}
 			y++;

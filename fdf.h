@@ -18,6 +18,9 @@
 #include "libs/libgfx/libgfx.h"
 #include <fcntl.h>
 
+void			draw_web(t_env *env);
+void			draw_line(t_env *env, t_drw *drw);
+int				**read_file(char *filename, t_env *env);
 
 #define SCALE 100
 

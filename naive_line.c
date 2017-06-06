@@ -65,6 +65,8 @@ void				naive_line(t_env *env, t_um *um)
 	}
 }
 
+
+/*
 int					main(int argc, char **argv)
 {
 	if (argc == 5)
@@ -82,3 +84,4 @@ int					main(int argc, char **argv)
 		mlx_loop(env.mlx);
 	}
 }
+*/

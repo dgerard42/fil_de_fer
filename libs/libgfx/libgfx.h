@@ -24,6 +24,7 @@ typedef struct	s_drw
 	int			y1;
 	int			rise;
 	int			run;
+	int			slope;
 }				t_drw;
 
 typedef	struct	s_env
