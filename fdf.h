@@ -16,6 +16,7 @@
 #include "libs/minilibx/mlx.h"
 #include "libs/libft/libft.h"
 #include "libs/libgfx/libgfx.h"
+#include <math.h>
 #include <fcntl.h>
 
 void			draw_web(t_env *env);

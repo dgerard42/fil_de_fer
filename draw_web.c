@@ -57,9 +57,10 @@ void			scale(t_env *env)
 	i = 0;
 	if (!env->scale)
 	{
-		(env->msize[0] >= env->msize[1]) ? env->mapmax = env->msize[0] : env->mapmax = env->msize[1];
+	//	(env->msize[0] >= env->msize[1]) ? env->mapmax = env->msize[0] : env->mapmax = env->msize[1];
+		//rewrite this ^^ terenary
 		(WIN_HI >= WIN_LEN) ? env->winmax = WIN_HI : env->winmax = WIN_LEN;
-		env->scale = env->winmax / (env->mapmax + ((env->winmax/env->mapmax) * 2);
+		env->scale = env->winmax / (env->mapmax + ((env->winmax/env->mapmax) * 2));
 	}
 	while (i < 6)
 	{
@@ -87,16 +88,16 @@ void			draw_web(t_env *env)
 			x = 0;
 			while ((x + 1) < ((twice == 0) ? (env->msize[0]) : (env->msize[1])))
 			{
-				(twice == 0) ? (env->ps[0] = x) : (env->ps[0] = y);
-				(twice == 0) ? (env->ps[1] = y) : (env->ps[1] = x);
-				(twice == 0) ? (env->ps[2] = map[y][x]) : (env->ps[2] = map[x][y]);
-				(twice == 0) ? (env->ps[3] = x + 1) : (env->ps[3] = y);
-				(twice == 0) ? (env->ps[4] = y) : (env->ps[4] = x + 1);
-				(twice == 0) ? (env->ps[5] = map[y][x + 1]) : (env->ps[5] = map[x + 1][y]);
+				env->ps[0] = (twice == 0) ? x : y;
+				env->ps[1] = (twice == 0) ? y : x;
+				env->ps[2] = (twice == 0) ? env->map[y][x] : env->map[x][y];
+				env->ps[3] = (twice == 0) ? (x + 1) : y;
+				env->ps[4] = (twice == 0) ? y : (x + 1);
+				env->ps[5] = (twice == 0) ? env->map[y][x + 1] : env->map[x + 1][y];
 				scale(env);
 				rotate(env);
-				project(env, drw);
-				draw_line(env, drw);
+				project(env, &drw);
+				draw_line(env, &drw);
 				x++;
 			}
 			y++;

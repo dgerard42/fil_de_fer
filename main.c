@@ -17,7 +17,9 @@ int			main(int argc, char **argv)
 	t_env	env;
 
 	env.mlx = mlx_init();
-	env.map = read_file(argv[1], env);
+	if (argc != 2)
+		return (0);
+ 	env.map = read_file(argv[1], env);
 		//here maybe look at map size and figure out appropritate window size
 		//at the very least, scale the map, maybe not in a seperate function
 	//env->image = mlx_new_image(env->mlx, env->win_len, env->win_hi, env->color);
