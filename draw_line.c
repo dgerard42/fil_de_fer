@@ -73,11 +73,9 @@ void				draw_line(t_env *env, t_drw *drw)
 	}
 	else
 	{
-		((drw->rise) >= 0) ? (adjust = 1) : (adjust = -1);
-		//change how you are assigning adjust. you are assigning it incorrectly
+		adjust = (drw->rise * drw->run >= 0) ? 1 : -1;
 		if (abs(drw->rise) <= abs(drw->run))
 		{
-			printf("%d\n", adjust);
 			level = abs(drw->run);
 			if (drw->x1 < drw->x0)
 			{
@@ -97,7 +95,6 @@ void				draw_line(t_env *env, t_drw *drw)
 		}
 		if (abs(drw->rise) > abs(drw->run))
 		{
-			printf("%d\n", adjust);
 			level = abs(drw->rise);
 			if (drw->y1 < drw->y0)
 			{
