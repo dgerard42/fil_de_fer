@@ -11,7 +11,28 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+/*
+#include <stdio.h>
+void			is_map(int **map)
+{
+	int		y;
+	int		x;
 
+	y = 0;
+	x = 0;
+	while (y < 11)
+	{
+		while(x < 19)
+		{
+			printf("%d,", map[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+		x = 0;
+	}
+}
+*/
 void			fill_array(int ***map, int fd, char *filename)
 {
 	int	i;
@@ -68,6 +89,7 @@ int				**read_file(char *filename, t_env *env)
 	close(fd);
 	ft_memdel((void**)&line);
 	fill_array(&map, fd, filename);
+//	is_map(map);
 	return (map);
 }
 

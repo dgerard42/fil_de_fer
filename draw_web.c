@@ -11,24 +11,45 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
 void			project(t_env *env, t_drw *drw)
 {
-	env->ps[0] = drw->x0;
-	env->ps[1] = drw->y0;
-	env->ps[3] = drw->x1;
-	env->ps[4] = drw->y1;
+	drw->x0 = env->ps[0];
+	drw->y0 = env->ps[1];
+	drw->x1 = env->ps[3];
+	drw->y1 = env->ps[4];
+	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
 }
+/*
+void			move(t_env *env)
+{
+	int i;
 
+	i = 0;
+	if (!xoffset)
+	{
+
+	}
+	while (i < 6)
+	{
+		env->ps[i] =
+		env->ps[i + 1] =
+		env->ps[i + 2] =
+		i = i + 3;
+	}
+}
+*/
 void			rotate(t_env *env)
 {
 	int	i;
 
 	i = 0;
-	env->xrot = 0;//initialize these elsewhere, wherever you get
-	env->yrot = 0;//keyboard inputs before you run the calculations
-	env->zrot = 0;
-	//allow the rotation values to be controlled by keystrokes
+
+	env->xrot = 0.0;
+	env->yrot = 0.0 ;
+	env->zrot = 0.0;
+
 	while (i < 6)
 	{
 		if (env->xrot != 0)
@@ -55,20 +76,21 @@ void			scale(t_env *env)
 	int i;
 
 	i = 0;
+//	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 	if (!env->scale)
 	{
-	//	(env->msize[0] >= env->msize[1]) ? env->mapmax = env->msize[0] : env->mapmax = env->msize[1];
-		//rewrite this ^^ terenary
-		(WIN_HI >= WIN_LEN) ? env->winmax = WIN_HI : env->winmax = WIN_LEN;
-		env->scale = env->winmax / (env->mapmax + ((env->winmax/env->mapmax) * 2));
+		env->mapmax = (env->msize[0] >= env->msize[1]) ? env->msize[0] : env->msize[1];
+		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
+		env->scale = env->winmax / (env->mapmax + 2);
 	}
 	while (i < 6)
 	{
 		env->ps[i] = (env->ps[i] * env->scale) + env->scale;
 		env->ps[i + 1] = (env->ps[i + 1] * env->scale) + env->scale;
-		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / 2);
+		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / 3);
 		i = i + 3;
 	}
+//	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 }
 
 void			draw_web(t_env *env)
@@ -88,6 +110,9 @@ void			draw_web(t_env *env)
 			x = 0;
 			while ((x + 1) < ((twice == 0) ? (env->msize[0]) : (env->msize[1])))
 			{
+	//			is_map(env->map);
+	//			printf("twice = %d\n", twice);
+	//			printf("x=%d, y=%d, z=%d\n", x, y, env->map[x][y]);
 				env->ps[0] = (twice == 0) ? x : y;
 				env->ps[1] = (twice == 0) ? y : x;
 				env->ps[2] = (twice == 0) ? env->map[y][x] : env->map[x][y];

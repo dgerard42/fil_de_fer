@@ -13,9 +13,6 @@
 #ifndef LIBGFX_H
 # define LIBGFX_H
 
-# define WIN_HI 1000
-# define WIN_LEN 1000
-
 typedef struct	s_drw
 {
 	int			x0;
@@ -35,8 +32,6 @@ typedef	struct	s_env
 	int			color;
 	int			**map;
 	int			*msize;
-//	int			yscale;
-//	int			zscale;
 	float		xrot;
 	float		yrot;
 	float		zrot;
@@ -44,6 +39,9 @@ typedef	struct	s_env
 	int			mapmax;
 	int			winmax;
 	int			scale;
+//	int			xoffest;
+//	int			yoffset;
+//	int			zoffset;
 }				t_env;
 
 #endif
