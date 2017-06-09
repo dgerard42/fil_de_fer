@@ -13,6 +13,8 @@
 #ifndef LIBGFX_H
 # define LIBGFX_H
 
+# include <stdbool.h>
+
 typedef struct	s_drw
 {
 	int			x0;
@@ -39,9 +41,10 @@ typedef	struct	s_env
 	int			mapmax;
 	int			winmax;
 	int			scale;
-//	int			xoffest;
-//	int			yoffset;
-//	int			zoffset;
+	int			xoffset;
+	int			yoffset;
+	int			zoffset;
+	bool		reinit;
 }				t_env;
 
 #endif

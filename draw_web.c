@@ -21,35 +21,39 @@ void			project(t_env *env, t_drw *drw)
 	drw->y1 = env->ps[4];
 	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
 }
-/*
+
 void			move(t_env *env)
 {
 	int i;
 
 	i = 0;
-	if (!xoffset)
+	if (env->reinit == false)
 	{
-
+		env->xoffset = 0;
+		env->yoffset = 0;
+		env->zoffset = 0;
 	}
 	while (i < 6)
 	{
-		env->ps[i] =
-		env->ps[i + 1] =
-		env->ps[i + 2] =
+		env->ps[i] = env->ps[i] + env->xoffset;
+		env->ps[i + 1] = env->ps[i + 1] + env->yoffset;
+		env->ps[i + 2] = env->ps[i + 2] + env->zoffset;
 		i = i + 3;
 	}
 }
-*/
+
 void			rotate(t_env *env)
 {
 	int	i;
 
 	i = 0;
 
-	env->xrot = 0.0;
-	env->yrot = 0.0 ;
-	env->zrot = 0.0;
-
+	if(env->reinit == false)
+	{
+		env->xrot = 0.5;
+		env->yrot = 0.2;
+		env->zrot = 0.0;
+	}
 	while (i < 6)
 	{
 		if (env->xrot != 0)
@@ -77,7 +81,7 @@ void			scale(t_env *env)
 
 	i = 0;
 //	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
-	if (!env->scale)
+	if (env->reinit == false)
 	{
 		env->mapmax = (env->msize[0] >= env->msize[1]) ? env->msize[0] : env->msize[1];
 		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
@@ -87,7 +91,9 @@ void			scale(t_env *env)
 	{
 		env->ps[i] = (env->ps[i] * env->scale) + env->scale;
 		env->ps[i + 1] = (env->ps[i + 1] * env->scale) + env->scale;
-		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / 3);
+		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / 4);
+		//maybe implement an msize[2] in the file_reader to find the highest x value
+		//then here, compare it to x and y to calculate a more accurate msize
 		i = i + 3;
 	}
 //	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
