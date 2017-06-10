@@ -12,8 +12,16 @@
 
 #include "fdf.h"
 
+void				colors()
+{
+	//increment color++;
+	//test and find where it overflows
+	//if it has to draw more pixels than that then have an offset thing??
+}
+
 void				draw_line(t_env *env, t_drw *drw)
 {
+	int color = 0x00FF00;
 	int		adjust;
 	int		bucket;
 	int		level;
@@ -27,9 +35,9 @@ void				draw_line(t_env *env, t_drw *drw)
 	if (drw->run == 0)
 	{
 		if (drw->y1 < drw->y0)
-			ft_swap((unsigned char *)&(drw->y0), (unsigned char *)&(drw->y1), 4);
+			ft_bitswap((unsigned char *)&(drw->y0), (unsigned char *)&(drw->y1), 4);
 		while (drw->y0 < drw->y1)
-			mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, 0x00FF00);
+			mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, color++);
 	}
 	else
 	{
@@ -39,12 +47,12 @@ void				draw_line(t_env *env, t_drw *drw)
 			level = abs(drw->run);
 			if (drw->x1 < drw->x0)
 			{
-				ft_swap((unsigned char *)&(drw->x0), ((unsigned char *)&drw->x1), 4);
-				ft_swap((unsigned char *)&(drw->y0), ((unsigned char *)&drw->y1), 4);
+				ft_bitswap((unsigned char *)&(drw->x0), ((unsigned char *)&drw->x1), 4);
+				ft_bitswap((unsigned char *)&(drw->y0), ((unsigned char *)&drw->y1), 4);
 			}
 			while (drw->x0 != drw->x1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, 0x00FF00);
+				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, color++);
 				bucket += drop[0];
 				if (bucket >= level)
 				{
@@ -58,12 +66,12 @@ void				draw_line(t_env *env, t_drw *drw)
 			level = abs(drw->rise);
 			if (drw->y1 < drw->y0)
 			{
-				ft_swap((unsigned char *)&(drw->x0), ((unsigned char *)&drw->x1), 4);
-				ft_swap((unsigned char *)&(drw->y0), ((unsigned char *)&drw->y1), 4);
+				ft_bitswap((unsigned char *)&(drw->x0), ((unsigned char *)&drw->x1), 4);
+				ft_bitswap((unsigned char *)&(drw->y0), ((unsigned char *)&drw->y1), 4);
 			}
 			while (drw->y0 != drw->y1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, 0x00FF00);
+				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, color++);
 				bucket += drop[1];
 				if (bucket >= level)
 				{

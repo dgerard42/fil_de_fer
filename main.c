@@ -22,8 +22,18 @@ bool		valid_file(char *filename)
 void				reinit(t_env *env)
 {
 	mlx_clear_window(env->mlx, env->window);
-//	ft_freearray((void **)env->ps, 6);
+	ft_memdel((void **)&env->ps);
 	draw_web(env);
+}
+
+void		welcome_user()
+{
+	ft_putstr("welcome user ( ͡° ͜ʖ ͡°)\n");
+	ft_putstr("--------------command list-----------------\n");
+	ft_putstr("ESC == exit program\nW == move up\nA == move left\n");
+	ft_putstr("S == move right\nD == move down\nZ == zoom in\nX == zoom out\n");
+	ft_putstr("H == rotate x\nU == inverse rotate x\nJ == rotate y\n");
+	ft_putstr("I == inverse rotate y\nK == rotate z\nO == inverse rotate z\n");
 }
 
 int			main(int argc, char **argv)
@@ -38,11 +48,10 @@ int			main(int argc, char **argv)
 		exit (0);
 	}
  	env.map = read_file(argv[1], &env);
-	//env->image = mlx_new_image(env->mlx, env->win_len, env->win_hi, env->color);
-		//use images later, get it working with pixel put first
 	env.window = mlx_new_window(env.mlx, WIN_LEN, WIN_HI, "hell yeee");
+	welcome_user();
 	draw_web(&env);
-	mlx_key_hook(env.window, key_controls, 0);
+	mlx_hook(env.window, 2, 0, key_controls, (void *)&env);
 	mlx_loop(env.mlx);
 	return (0);
 }

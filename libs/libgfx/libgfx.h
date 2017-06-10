@@ -24,6 +24,8 @@ typedef struct	s_drw
 	int			rise;
 	int			run;
 	int			slope;
+	bool		colors0;
+	bool		colors1;
 }				t_drw;
 
 typedef	struct	s_env

@@ -15,11 +15,17 @@
 
 void			project(t_env *env, t_drw *drw)
 {
-	drw->x0 = env->ps[0];
-	drw->y0 = env->ps[1];
-	drw->x1 = env->ps[3];
-	drw->y1 = env->ps[4];
-	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
+	if (env->ps[0] < WIN_LEN && env->ps[1] < WIN_HI && env->ps[3] > 0 && env->ps[4] > 0)
+	{
+		drw->x0 = env->ps[0];
+		drw->y0 = env->ps[1];
+		drw->x1 = env->ps[3];
+		drw->y1 = env->ps[4];
+		drw->colors0 = (env->ps[2] > 0) ? true : false;
+		drw->colors1 = (env->ps[5] > 0) ? true : false;
+		draw_line(env, drw);
+	}
+//	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
 }
 
 void			move(t_env *env)
@@ -33,12 +39,14 @@ void			move(t_env *env)
 		env->yoffset = 0;
 		env->zoffset = 0;
 	}
+//	printf("b4 offset ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 	while (i < 6)
 	{
 		env->ps[i] = env->ps[i] + env->xoffset;
 		env->ps[i + 1] = env->ps[i + 1] + env->yoffset;
 		env->ps[i + 2] = env->ps[i + 2] + env->zoffset;
 		i = i + 3;
+//		printf("after offset ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 	}
 }
 
@@ -50,10 +58,17 @@ void			rotate(t_env *env)
 
 	if(env->reinit == false)
 	{
-		env->xrot = 0.5;
+		env->xrot = 0.6;
 		env->yrot = 0.2;
 		env->zrot = 0.0;
 	}
+	if (env->xrot > 6.2)
+		env->xrot = 0.0;
+	if (env->yrot > 6.2)
+		env->yrot = 0.0;
+	if (env->zrot > 6.2)
+		env->zrot = 0.0;
+//	printf("xrot=%f, yrot=%f, zrot=%f", env->xrot, env->yrot, env->zrot);
 	while (i < 6)
 	{
 		if (env->xrot != 0)
@@ -126,9 +141,9 @@ void			draw_web(t_env *env)
 				env->ps[4] = (twice == 0) ? y : (x + 1);
 				env->ps[5] = (twice == 0) ? env->map[y][x + 1] : env->map[x + 1][y];
 				scale(env);
+				move(env);
 				rotate(env);
 				project(env, &drw);
-				draw_line(env, &drw);
 				x++;
 			}
 			y++;
