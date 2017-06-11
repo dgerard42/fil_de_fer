@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/23 21:08:33 by dgerard           #+#    #+#             */
-/*   Updated: 2017/05/31 23:13:13 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/06/10 12:06:31 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "libs/libgfx/libgfx.h"
 # include <math.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 void			draw_web(t_env *env);
 void			draw_line(t_env *env, t_drw *drw);
@@ -26,7 +27,7 @@ int				key_controls(int keycode, t_env *env);
 void			reinit(t_env *env);
 
 # define WIN_HI				1200
-# define WIN_LEN			1200
+# define WIN_LEN			1800
 
 # define KEY_ESC			53
 # define KEY_W				13

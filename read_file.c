@@ -20,9 +20,9 @@ void			is_map(int **map)
 
 	y = 0;
 	x = 0;
-	while (y < 11)
+	while (y < 10)
 	{
-		while(x < 19)
+		while(x < 14)
 		{
 			printf("%d,", map[y][x]);
 			x++;
@@ -33,6 +33,7 @@ void			is_map(int **map)
 	}
 }
 */
+
 void			fill_array(int ***map, int fd, char *filename)
 {
 	int	i;
@@ -85,30 +86,29 @@ int				**read_file(char *filename, t_env *env)
 			i++;
 		i++;
 	}
-	map = ft_2dintarray(env->msize[0], env->msize[1]);
+	map = ft_2dintarray(env->msize[1], env->msize[0]);
 	close(fd);
 	ft_memdel((void**)&line);
 	fill_array(&map, fd, filename);
-//	is_map(map);
 	return (map);
 }
 
 /*
-#include <stdio.h>
 int				main(int argc, char **argv)
 {
 	if (argc == 2)
 	{
+		t_env	env;
 		int		**res;
 		int		y;
 		int		x;
 
 		y = 0;
 		x = 0;
-		res = read_file(argv[1]);
-		while (y < 11)
+		res = read_file(argv[1], &env);
+		while (y < (env.msize[1]))
 		{
-			while(x < 19)
+			while(x < (env.msize[0]))
 			{
 				printf("%d,", res[y][x]);
 				x++;

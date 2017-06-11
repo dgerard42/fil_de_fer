@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <stdio.h>
 
 void			project(t_env *env, t_drw *drw)
 {
