@@ -1,0 +1,30 @@
+fug
+
+- in the main, collect a max size of z (msize[2])
+- color diff total / (msize[2] * zscale * 1000) = color increment (per z increase by 1)
+- z0 = z from the map * zsacle * 1000;
+- z1 = z from the map * zscale * 1000;
+- z point of higher value - z point of lower value = z diff
+- z diff * color inc = color_max between those 2 points
+- color_max - color = color_diff
+
+simple
+- color_diff / x_diff = color_inc
+- as x value goes up by one, increment color my color_inc
+
+optimized
+- increment bucket by drop
+- if bucket >= level, increase color by one, adjust level by level
+- drop = color_diff / x_diff * 1000
+- level = 1 * 1000
+
+/*
+- feed the color ft x or y coords depending on the slope of the line
+- z difference / point difference = z incrementer
+
+z incrementer is the amount you must increment z by every time that the point is increased by one
+but what about color ? when do you increment color?
+you increment it when z goes over the THRESHOLD
+the threshold is the color difference / the x difference
+wait, so why do I even need to increment z?
+*/

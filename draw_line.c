@@ -19,13 +19,21 @@
 //0xFF0000 -> 0xFFFF00
 //diff = 0x0000FF
 
-int				colors(t_env *env)
+int					color_setup(t_env *env, t_drw *drw, t_clr *clr)
 {
-	
+	if (abs(drw->rise) <= abs(drw->run))
+		clr->p_diff = (drw->x1 < drw->x0) ? (drw->x0 - drw->x1) : (drw->x1 - drw->x0);
+		
+	if (abs(drw->rise) > abs(drw->run))
 
 }
 
-void				draw_line(t_env *env, t_drw *drw)
+int				color_inc(t_env *env, t_drw *drw, int x or y)
+{
+
+}
+
+void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 {
 	int		adjust;
 	int		bucket;
@@ -37,6 +45,7 @@ void				draw_line(t_env *env, t_drw *drw)
 	drw->run = (drw->x1) - (drw->x0);
 	drop[0] = abs(drw->rise * 2);
 	drop[1] = abs(drw->run * 2);
+	color_setup(env, drw, clr);
 	if (drw->run == 0)
 	{
 		if (drw->y1 < drw->y0)
@@ -57,7 +66,7 @@ void				draw_line(t_env *env, t_drw *drw)
 			}
 			while (drw->x0 != drw->x1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, ;
+				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, color();
 				bucket += drop[0];
 				if (bucket >= level)
 				{
@@ -76,7 +85,7 @@ void				draw_line(t_env *env, t_drw *drw)
 			}
 			while (drw->y0 != drw->y1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, );
+				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, color());
 				bucket += drop[1];
 				if (bucket >= level)
 				{

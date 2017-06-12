@@ -43,6 +43,13 @@ void			reinit(t_env *env);
 # define KEY_O				31
 # define KEY_K				40
 
+typedef struct s_clr
+{
+	int			color;
+	int			color_max;
+	int			p_diff;
+}				t_clr;
+
 typedef struct	s_drw
 {
 	int			x0;
@@ -54,10 +61,6 @@ typedef struct	s_drw
 	int			rise;
 	int			run;
 	int			slope;
-	int			color;
-	int			color_max;
-//	bool		colors0;
-//	bool		colors1;
 }				t_drw;
 
 typedef	struct	s_env

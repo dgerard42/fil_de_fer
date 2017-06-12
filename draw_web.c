@@ -29,16 +29,16 @@ void			project(t_env *env, t_drw *drw)
 		float 	color_inc;
 		float	zdiff;
 
+		clr->color = 0xFF0000;
 		color_inc = (0x00FF00) / (env->msize[2] * 1000 * (env->scale / 4));
 		zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
-		drw->color_max = zdiff * color_inc;
+		clr->color_max = zdiff * color_inc;
 		drw->x0 = env->ps[0];
 		drw->y0 = env->ps[1];
 //		drw->z0 = env->ps[2];
 		drw->x1 = env->ps[3];
 		drw->y1 = env->ps[4];
 //		drw->z1 = env->ps[5];
-		drw->color = 0xFF0000;
 	//	color_setup(env, drw);
 	//	drw->colors0 = (env->ps[2] > 0) ? true : false;
 	//	drw->colors1 = (env->ps[5] > 0) ? true : false;
@@ -141,6 +141,7 @@ void			draw_web(t_env *env)
 	int y;
 	int twice;
 	t_drw drw;
+	t_dclr clr;
 
 	twice = 0;
 	env->ps = ft_intarraynew(6);
@@ -164,7 +165,7 @@ void			draw_web(t_env *env)
 				scale(env, &drw);
 				move(env);
 				rotate(env);
-				project(env, &drw);
+				project(env, &drw, &clr);
 				x++;
 			}
 			y++;
