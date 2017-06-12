@@ -34,7 +34,7 @@ void			is_map(int **map)
 }
 */
 
-void			fill_array(int ***map, int fd, char *filename)
+void			fill_array(int ***map, int fd, char *filename, t_env *env)
 {
 	int	i;
 	int y;
@@ -53,6 +53,8 @@ void			fill_array(int ***map, int fd, char *filename)
 			if (line[i] != ' ' && line[i] != '\n')
 			{
 				tmp = ft_atoi(line + i);
+				if (tmp > env->msize[2])
+					env->msize[2] = tmp;
 				(*map)[y][x++] = tmp;
 			}
 			while (line[i] != '\0' && line[i] != ' ' && line[i] != '\n')
@@ -89,7 +91,7 @@ int				**read_file(char *filename, t_env *env)
 	map = ft_2dintarray(env->msize[1], env->msize[0]);
 	close(fd);
 	ft_memdel((void**)&line);
-	fill_array(&map, fd, filename);
+	fill_array(&map, fd, filename, env);
 	return (map);
 }
 

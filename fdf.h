@@ -15,10 +15,10 @@
 
 # include "libs/minilibx/mlx.h"
 # include "libs/libft/libft.h"
-# include "libs/libgfx/libgfx.h"
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 void			draw_web(t_env *env);
 void			draw_line(t_env *env, t_drw *drw);
@@ -42,5 +42,43 @@ void			reinit(t_env *env);
 # define KEY_J				38
 # define KEY_O				31
 # define KEY_K				40
+
+typedef struct	s_drw
+{
+	int			x0;
+	int			y0;
+	int			z0;
+	int			x1;
+	int			y1;
+	int			z1;
+	int			rise;
+	int			run;
+	int			slope;
+	int			color;
+	int			color_max;
+//	bool		colors0;
+//	bool		colors1;
+}				t_drw;
+
+typedef	struct	s_env
+{
+	void		*mlx;
+	void		*window;
+	void		*image;
+	int			color;
+	int			**map;
+	int			*msize;
+	float		xrot;
+	float		yrot;
+	float		zrot;
+	int			*ps;
+	int			mapmax;
+	int			winmax;
+	int			scale;
+	int			xoffset;
+	int			yoffset;
+	int			zoffset;
+	bool		reinit;
+}				t_env;
 
 #endif

@@ -11,17 +11,37 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+/*
+void			color_setup(t_env *env, t_drw *drw)
+{
+	float 	color_inc;
+	float	zdiff;
 
+	color_inc = (0x00FF00) / (env->msize[2] * 1000 * (env->scale / 4));
+	zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
+	drw->color_max = zdiff * color_inc;
+}
+*/
 void			project(t_env *env, t_drw *drw)
 {
 	if (env->ps[0] < WIN_LEN && env->ps[1] < WIN_HI && env->ps[3] > 0 && env->ps[4] > 0)
 	{
+		float 	color_inc;
+		float	zdiff;
+
+		color_inc = (0x00FF00) / (env->msize[2] * 1000 * (env->scale / 4));
+		zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
+		drw->color_max = zdiff * color_inc;
 		drw->x0 = env->ps[0];
 		drw->y0 = env->ps[1];
+//		drw->z0 = env->ps[2];
 		drw->x1 = env->ps[3];
 		drw->y1 = env->ps[4];
-		drw->colors0 = (env->ps[2] > 0) ? true : false;
-		drw->colors1 = (env->ps[5] > 0) ? true : false;
+//		drw->z1 = env->ps[5];
+		drw->color = 0xFF0000;
+	//	color_setup(env, drw);
+	//	drw->colors0 = (env->ps[2] > 0) ? true : false;
+	//	drw->colors1 = (env->ps[5] > 0) ? true : false;
 		draw_line(env, drw);
 	}
 //	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
@@ -54,7 +74,6 @@ void			rotate(t_env *env)
 	int	i;
 
 	i = 0;
-
 	if(env->reinit == false)
 	{
 		env->xrot = 0.6;
@@ -89,7 +108,7 @@ void			rotate(t_env *env)
 	}
 }
 
-void			scale(t_env *env)
+void			scale(t_env *env, t_drw *drw)
 {
 	int i;
 
@@ -100,6 +119,7 @@ void			scale(t_env *env)
 		env->mapmax = (env->msize[0] >= env->msize[1]) ? env->msize[0] : env->msize[1];
 		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
 		env->scale = env->winmax / (env->mapmax + 2);
+
 	}
 	while (i < 6)
 	{
@@ -110,7 +130,9 @@ void			scale(t_env *env)
 		//then here, compare it to x and y to calculate a more accurate msize
 		i = i + 3;
 	}
-//	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
+	drw->z0 = (env->ps[2]) * 1000;
+	drw->z1 = (env->ps[5]) * 1000;
+ //	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 }
 
 void			draw_web(t_env *env)
@@ -139,7 +161,7 @@ void			draw_web(t_env *env)
 				env->ps[3] = (twice == 0) ? (x + 1) : y;
 				env->ps[4] = (twice == 0) ? y : (x + 1);
 				env->ps[5] = (twice == 0) ? env->map[y][x + 1] : env->map[x + 1][y];
-				scale(env);
+				scale(env, &drw);
 				move(env);
 				rotate(env);
 				project(env, &drw);
