@@ -22,27 +22,28 @@ void			color_setup(t_env *env, t_drw *drw)
 	drw->color_max = zdiff * color_inc;
 }
 */
-void			project(t_env *env, t_drw *drw)
+void			project(t_env *env, t_drw *drw, t_clr *clr)
 {
 	if (env->ps[0] < WIN_LEN && env->ps[1] < WIN_HI && env->ps[3] > 0 && env->ps[4] > 0)
 	{
-		float 	color_inc;
-		float	zdiff;
+		clr->start_color = 0xFF0000;
+		if (env->msize[2] > 0)
+		{
+			float 	color_inc;
+			float	zdiff;
 
-		clr->color = 0xFF0000;
-		color_inc = (0x00FF00) / (env->msize[2] * 1000 * (env->scale / 4));
-		zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
-		clr->color_max = zdiff * color_inc;
+			clr->end_color = 0x00FF00;
+			clr->color_diff = clr->start_color / clr->end_color;
+			color_inc = clr->color_diff / (env->msize[2] * 1000 * (env->scale / 4));
+			zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
+			zdiff = (drw->z0 = drw->z1) ? 0 : zdiff;
+			clr->color_max = zdiff * color_inc;
+		}
 		drw->x0 = env->ps[0];
 		drw->y0 = env->ps[1];
-//		drw->z0 = env->ps[2];
 		drw->x1 = env->ps[3];
 		drw->y1 = env->ps[4];
-//		drw->z1 = env->ps[5];
-	//	color_setup(env, drw);
-	//	drw->colors0 = (env->ps[2] > 0) ? true : false;
-	//	drw->colors1 = (env->ps[5] > 0) ? true : false;
-		draw_line(env, drw);
+		draw_line(env, drw, clr);
 	}
 //	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
 }
@@ -141,7 +142,7 @@ void			draw_web(t_env *env)
 	int y;
 	int twice;
 	t_drw drw;
-	t_dclr clr;
+	t_clr clr;
 
 	twice = 0;
 	env->ps = ft_intarraynew(6);

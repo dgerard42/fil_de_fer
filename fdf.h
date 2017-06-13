@@ -20,12 +20,6 @@
 # include <stdio.h>
 # include <stdbool.h>
 
-void			draw_web(t_env *env);
-void			draw_line(t_env *env, t_drw *drw);
-int				**read_file(char *filename, t_env *env);
-int				key_controls(int keycode, t_env *env);
-void			reinit(t_env *env);
-
 # define WIN_HI				1200
 # define WIN_LEN			1800
 
@@ -45,9 +39,14 @@ void			reinit(t_env *env);
 
 typedef struct s_clr
 {
-	int			color;
+	int			start_color;
+	int			end_color;
 	int			color_max;
 	int			p_diff;
+	int			c_bucket;
+	int			c_drop;
+	int			c_level;
+	int			color_diff;
 }				t_clr;
 
 typedef struct	s_drw
@@ -83,5 +82,11 @@ typedef	struct	s_env
 	int			zoffset;
 	bool		reinit;
 }				t_env;
+
+void			draw_web(t_env *env);
+void			draw_line(t_env *env, t_drw *drw, t_clr *clr);
+int				**read_file(char *filename, t_env *env);
+int				key_controls(int keycode, t_env *env);
+void			reinit(t_env *env);
 
 #endif

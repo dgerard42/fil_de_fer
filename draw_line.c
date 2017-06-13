@@ -19,18 +19,32 @@
 //0xFF0000 -> 0xFFFF00
 //diff = 0x0000FF
 
-int					color_setup(t_env *env, t_drw *drw, t_clr *clr)
+void				color_setup(t_drw *drw, t_clr *clr)
 {
+	int local_clr_diff;
+
+	local_clr_diff = clr->start_color - clr->color_max;
 	if (abs(drw->rise) <= abs(drw->run))
 		clr->p_diff = (drw->x1 < drw->x0) ? (drw->x0 - drw->x1) : (drw->x1 - drw->x0);
-		
 	if (abs(drw->rise) > abs(drw->run))
-
+		clr->p_diff = (drw->y1 < drw->y0) ? (drw->y0 - drw->y1) : (drw->y1 - drw->y0);
+	clr->c_bucket = 0;
+	clr->c_drop = (clr->p_diff != 0) ? (clr->color_diff / clr->p_diff) * 1000 : 1000;
+	clr->c_level = 1000;
 }
 
-int				color_inc(t_env *env, t_drw *drw, int x or y)
+int					color_inc(t_env *env, t_clr *clr)
 {
-
+	if (env->msize[2] > 0)
+	{
+		clr->c_bucket += clr->c_drop;
+		if (clr->c_bucket >= clr->c_level)
+		{
+			clr->start_color++;
+			clr->c_level += 1000;
+		}
+	}
+	return (clr->start_color);
 }
 
 void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
@@ -45,13 +59,13 @@ void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 	drw->run = (drw->x1) - (drw->x0);
 	drop[0] = abs(drw->rise * 2);
 	drop[1] = abs(drw->run * 2);
-	color_setup(env, drw, clr);
+	color_setup(drw, clr);
 	if (drw->run == 0)
 	{
 		if (drw->y1 < drw->y0)
 			ft_bitswap((unsigned char *)&(drw->y0), (unsigned char *)&(drw->y1), 4);
 		while (drw->y0 < drw->y1)
-			mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, colors;
+			mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, 0xFF0000);
 	}
 	else
 	{
@@ -66,7 +80,7 @@ void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 			}
 			while (drw->x0 != drw->x1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, color();
+				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, color_inc(env, clr));
 				bucket += drop[0];
 				if (bucket >= level)
 				{
@@ -85,7 +99,7 @@ void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 			}
 			while (drw->y0 != drw->y1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, color());
+				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, color_inc(env, clr));
 				bucket += drop[1];
 				if (bucket >= level)
 				{
