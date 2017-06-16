@@ -24,6 +24,7 @@ void			color_setup(t_env *env, t_drw *drw)
 */
 void			project(t_env *env, t_drw *drw, t_clr *clr)
 {
+	printf("before color project calculations z0=%d z1=%d\n", drw->z0, drw->z1);
 	if (env->ps[0] < WIN_LEN && env->ps[1] < WIN_HI && env->ps[3] > 0 && env->ps[4] > 0)
 	{
 		clr->start_color = 0xFF0000;
@@ -34,15 +35,18 @@ void			project(t_env *env, t_drw *drw, t_clr *clr)
 
 			clr->end_color = 0x00FF00;
 			clr->color_diff = clr->start_color / clr->end_color;
+			// was originaly start color divided by end color. why did that work?
 			color_inc = clr->color_diff / (env->msize[2] * 1000 * (env->scale / 4));
-			zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
-			zdiff = (drw->z0 = drw->z1) ? 0 : zdiff;
+		//	zdiff = (drw->z0 > drw->z1) ? (drw->z0 - drw->z1) : (drw->z1 - drw->z0);
+		//	zdiff = (drw->z0 = drw->z1) ? 0 : zdiff;
+		//	for some reason, these two lines seem to change the values of  z ^^^
 			clr->color_max = zdiff * color_inc;
 		}
 		drw->x0 = env->ps[0];
 		drw->y0 = env->ps[1];
 		drw->x1 = env->ps[3];
 		drw->y1 = env->ps[4];
+		printf("after color project caluclations z0=%d z1=%d\n", drw->z0, drw->z1);
 		draw_line(env, drw, clr);
 	}
 //	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
@@ -66,7 +70,7 @@ void			move(t_env *env)
 		env->ps[i + 1] = env->ps[i + 1] + env->yoffset;
 		env->ps[i + 2] = env->ps[i + 2] + env->zoffset;
 		i = i + 3;
-//		printf("after offset ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
+//	printf("after offset ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 	}
 }
 
@@ -131,8 +135,10 @@ void			scale(t_env *env, t_drw *drw)
 		//then here, compare it to x and y to calculate a more accurate msize
 		i = i + 3;
 	}
+	printf("ps values ps[2]=%d, ps[5]=%d\n", env->ps[2], env->ps[5]);
 	drw->z0 = (env->ps[2]) * 1000;
 	drw->z1 = (env->ps[5]) * 1000;
+	printf("immediately after filling in scale z0=%d z1=%d\n", drw->z0, drw->z1);
  //	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 }
 
@@ -164,8 +170,11 @@ void			draw_web(t_env *env)
 				env->ps[4] = (twice == 0) ? y : (x + 1);
 				env->ps[5] = (twice == 0) ? env->map[y][x + 1] : env->map[x + 1][y];
 				scale(env, &drw);
+				printf("before move z0=%d z1=%d\n", drw.z0, drw.z1);
 				move(env);
+				printf("before rotate z0=%d z1=%d\n", drw.z0, drw.z1);
 				rotate(env);
+				printf("before project z0=%d z1=%d\n", drw.z0, drw.z1);
 				project(env, &drw, &clr);
 				x++;
 			}
