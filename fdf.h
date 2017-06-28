@@ -74,7 +74,7 @@ typedef	struct	s_env
 	float		yrot;
 	float		zrot;
 	int			*ps;
-	int			mapmax;
+//	int			mapmax;
 	int			winmax;
 	int			scale;
 	int			xoffset;

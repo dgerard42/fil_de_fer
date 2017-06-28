@@ -12,13 +12,6 @@
 
 #include "fdf.h"
 
-//0x00FF00 -> 0x00FFFF
-//DIFF = 0x0000FF
-//amount changed per tick of z = DIFF / Z-DIFF
-
-//0xFF0000 -> 0xFFFF00
-//diff = 0x0000FF
-
 void				color_setup(t_drw *drw, t_clr *clr)
 {
 	int local_clr_diff;
@@ -31,7 +24,7 @@ void				color_setup(t_drw *drw, t_clr *clr)
 	clr->c_bucket = 0;
 	clr->c_drop = (clr->p_diff != 0) ? (clr->color_diff / clr->p_diff) * 1000 : 1000;
 	clr->c_level = 1000;
-	printf("after color setup z0=%d z1=%d\n", drw->z0, drw->z1);
+//	printf("after color setup z0=%d z1=%d\n", drw->z0, drw->z1);
 }
 
 int					color_inc(t_env *env, t_clr *clr, t_drw *drw)
