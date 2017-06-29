@@ -53,7 +53,7 @@ void			fill_array(int ***map, int fd, char *filename, t_env *env)
 			if (line[i] != ' ' && line[i] != '\n')
 			{
 				tmp = ft_atoi(line + i);
-				if (tmp > env->msize[2])
+				if (abs(tmp) > env->msize[2])
 					env->msize[2] = tmp;
 				(*map)[y][x++] = tmp;
 			}
@@ -76,7 +76,7 @@ int				**read_file(char *filename, t_env *env)
 
 	i = 0;
 	line = NULL;
-	env->msize = ft_intarraynew(2);
+	env->msize = ft_intarraynew(3);
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 		env->msize[1]++;

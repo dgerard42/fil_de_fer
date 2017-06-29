@@ -37,6 +37,7 @@
 # define KEY_O				31
 # define KEY_K				40
 
+/*
 typedef struct s_clr
 {
 	int			start_color;
@@ -48,15 +49,16 @@ typedef struct s_clr
 	int			c_level;
 	int			color_diff;
 }				t_clr;
+*/
 
 typedef struct	s_drw
 {
 	int			x0;
 	int			y0;
-	int			z0;
+//	int			z0;
 	int			x1;
 	int			y1;
-	int			z1;
+//	int			z1;
 	int			rise;
 	int			run;
 	int			slope;
@@ -74,9 +76,10 @@ typedef	struct	s_env
 	float		yrot;
 	float		zrot;
 	int			*ps;
-//	int			mapmax;
+	int			mapmax;
 	int			winmax;
 	int			scale;
+	int			zscale;
 	int			xoffset;
 	int			yoffset;
 	int			zoffset;
@@ -84,7 +87,7 @@ typedef	struct	s_env
 }				t_env;
 
 void			draw_web(t_env *env);
-void			draw_line(t_env *env, t_drw *drw, t_clr *clr);
+void			draw_line(t_env *env, t_drw *drw);
 int				**read_file(char *filename, t_env *env);
 int				key_controls(int keycode, t_env *env);
 void			reinit(t_env *env);

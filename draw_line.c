@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 
+/*
 void				color_setup(t_drw *drw, t_clr *clr)
 {
 	int local_clr_diff;
@@ -27,6 +28,7 @@ void				color_setup(t_drw *drw, t_clr *clr)
 //	printf("after color setup z0=%d z1=%d\n", drw->z0, drw->z1);
 }
 
+
 int					color_inc(t_env *env, t_clr *clr, t_drw *drw)
 {
 	if (env->msize[2] > 0 && drw->z1 != drw->z0)
@@ -40,8 +42,9 @@ int					color_inc(t_env *env, t_clr *clr, t_drw *drw)
 	}
 	return (clr->start_color);
 }
+*/
 
-void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
+void				draw_line(t_env *env, t_drw *drw)
 {
 	int		adjust;
 	int		bucket;
@@ -53,13 +56,13 @@ void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 	drw->run = (drw->x1) - (drw->x0);
 	drop[0] = abs(drw->rise * 2);
 	drop[1] = abs(drw->run * 2);
-	color_setup(drw, clr);
+//	color_setup(drw, clr);
 	if (drw->run == 0)
 	{
 		if (drw->y1 < drw->y0)
 			ft_bitswap((unsigned char *)&(drw->y0), (unsigned char *)&(drw->y1), 4);
 		while (drw->y0 < drw->y1)
-			mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, clr->start_color);
+			mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, 0x00FF00);
 	}
 	else
 	{
@@ -74,7 +77,7 @@ void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 			}
 			while (drw->x0 != drw->x1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, color_inc(env, clr, drw));
+				mlx_pixel_put(env->mlx, env->window, drw->x0++, drw->y0, 0x00FF00);
 				bucket += drop[0];
 				if (bucket >= level)
 				{
@@ -93,7 +96,7 @@ void				draw_line(t_env *env, t_drw *drw, t_clr *clr)
 			}
 			while (drw->y0 != drw->y1)
 			{
-				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, color_inc(env, clr, drw));
+				mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, 0x00FF00);
 				bucket += drop[1];
 				if (bucket >= level)
 				{

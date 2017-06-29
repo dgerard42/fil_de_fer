@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 
+/*
 void			color_calcs(t_env *env, t_drw *drw, t_clr *clr)
 {
 	clr->start_color = 0xFF0000;
@@ -30,19 +31,20 @@ void			color_calcs(t_env *env, t_drw *drw, t_clr *clr)
 		clr->color_max = zdiff * color_inc;
 	}
 }
+*/
 
-void			project(t_env *env, t_drw *drw, t_clr *clr)
+void			project(t_env *env, t_drw *drw)
 {
 	//printf("before color project calculations z0=%d z1=%d\n", drw->z0, drw->z1);
 	if (env->ps[0] < WIN_LEN && env->ps[1] < WIN_HI && env->ps[3] > 0 && env->ps[4] > 0)
 	{
-		color_calcs(env, drw, clr);
+//		color_calcs(env, drw, clr);
 		drw->x0 = env->ps[0];
 		drw->y0 = env->ps[1];
 		drw->x1 = env->ps[3];
 		drw->y1 = env->ps[4];
 		//printf("after color project caluclations z0=%d z1=%d\n", drw->z0, drw->z1);
-		draw_line(env, drw, clr);
+		draw_line(env, drw);
 	}
 //	printf("in drw-> x0=%d, y0=%d, x1=%d, y1=%d\n", drw->x0, drw->y0, drw->x1, drw->y1);
 }
@@ -116,29 +118,26 @@ void			scale(t_env *env, t_drw *drw)
 //	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 	if (env->reinit == false)
 	{
-		env->scale = (WIN_HI <= WIN_LEN) ? (WIN_HI / (env->msize[1] + 2)) : (WIN_LEN / (env->msize[0] + 2));	
-		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
-	}
-	/*
-	{
 		env->mapmax = (env->msize[0] >= env->msize[1]) ? env->msize[0] : env->msize[1];
+		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
 		env->scale = env->winmax / (env->mapmax + 2);
-		printf("winmax=%d, mapmax =%d", env->winmax, env->mapmax);
-		env->winmin = (WIN_HI <= WIN_LEN) ? WIN_HI : WIN_LEN;
+		if (env->msize[2] == 0)
+			env->msize[2] = 1;
+		env->zscale = (env->mapmax / env->msize[2]) * 4;
+//		printf("msize[2] = %d, mapmax = %d\n", env->msize[2], env->mapmax);
+//		printf("winmax=%d, mapmax =%d", env->winmax, env->mapmax);
 	}
-	*/
 	while (i < 6)
 	{
 		env->ps[i] = (env->ps[i] * env->scale) + env->scale;
 		env->ps[i + 1] = (env->ps[i + 1] * env->scale) + env->scale;
-		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / 4);
-		//maybe implement an msize[2] in the file_reader to find the highest x value
-		//then here, compare it to x and y to calculate a more accurate msize
+		printf("scale = %d, zscale = %d\n", env->scale, env->zscale);
+		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / env->zscale);
 		i = i + 3;
 	}
 //	printf("ps values ps[2]=%d, ps[5]=%d\n", env->ps[2], env->ps[5]);
-	drw->z0 = (env->ps[2]) * 1000;
-	drw->z1 = (env->ps[5]) * 1000;
+//	drw->z0 = (env->ps[2]) * 1000;
+//	drw->z1 = (env->ps[5]) * 1000;
 //	printf("immediately after filling in scale z0=%d z1=%d\n", drw->z0, drw->z1);
  //	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 }
@@ -149,7 +148,7 @@ void			draw_web(t_env *env)
 	int y;
 	int twice;
 	t_drw drw;
-	t_clr clr;
+//	t_clr clr;
 
 	twice = 0;
 	env->ps = ft_intarraynew(6);
@@ -176,7 +175,7 @@ void			draw_web(t_env *env)
 	//			printf("before rotate z0=%d z1=%d\n", drw.z0, drw.z1);
 				rotate(env);
 	//			printf("before project z0=%d z1=%d\n", drw.z0, drw.z1);
-				project(env, &drw, &clr);
+				project(env, &drw);
 				x++;
 			}
 			y++;
