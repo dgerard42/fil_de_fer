@@ -12,11 +12,14 @@
 
 #include "fdf.h"
 
-bool		valid_file(char *filename)
+void		valid_file(char *filename, t_env *env)
 {
+	env->valid_file = true;
 	if (!(ft_strstr(filename, ".fdf")))
-		return (false);
-	return (true);
+	{
+		env->valid_file = false;
+		printf("here0\n");
+	}
 }
 
 void				reinit(t_env *env)
@@ -42,12 +45,15 @@ int			main(int argc, char **argv)
 
 	env.mlx = mlx_init();
 	env.reinit = false;
-	if (argc != 2 || valid_file(argv[1]) == false)
+	valid_file(argv[1], &env);
+ 	env.map = read_file(argv[1], &env);
+	if (argc != 2 || env.valid_file == false)
 	{
 		ft_putstr("Error\n");
+		ft_2dfreearray((void **)env.map, env.msize[1]);
+		ft_memdel((void **)&env.msize);
 		exit (0);
 	}
- 	env.map = read_file(argv[1], &env);
 	env.window = mlx_new_window(env.mlx, WIN_LEN, WIN_HI, "hell yeee");
 	welcome_user();
 	draw_web(&env);

@@ -39,10 +39,11 @@ void			fill_array(int ***map, int fd, char *filename, t_env *env)
 	int	i;
 	int y;
 	int x;
-	int	tmp;
+	int	x_len;
 	char *line;
 
 	y = 0;
+	x_len = 0;
 	fd = open(filename, O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 	{
@@ -52,14 +53,21 @@ void			fill_array(int ***map, int fd, char *filename, t_env *env)
 		{
 			if (line[i] != ' ' && line[i] != '\n')
 			{
-				tmp = ft_atoi(line + i);
-				if (abs(tmp) > env->msize[2])
-					env->msize[2] = tmp;
-				(*map)[y][x++] = tmp;
+				(*map)[y][x++] = ft_atoi(line + i);
+				if (abs(ft_atoi(line + i)) > env->msize[2])
+					env->msize[2] = ft_atoi(line + i);
 			}
 			while (line[i] != '\0' && line[i] != ' ' && line[i] != '\n')
 				i++;
-			i++;
+			if (line[i] != '\0') //changed here
+				i++;
+			//it can go past the null byte here so it's throwing off the x iterator... but only sometimes
+		}
+		printf("%d, %d\n", env->msize[0], x);
+		if (x != env->msize[0])
+		{
+			env->valid_file = false;
+			printf("here8\n");
 		}
 		y++;
 	}

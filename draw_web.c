@@ -82,13 +82,7 @@ void			rotate(t_env *env)
 		env->yrot = 0.2;
 		env->zrot = 0.0;
 	}
-	if (env->xrot > 6.2)
-		env->xrot = 0.0;
-	if (env->yrot > 6.2)
-		env->yrot = 0.0;
-	if (env->zrot > 6.2)
-		env->zrot = 0.0;
-//	printf("xrot=%f, yrot=%f, zrot=%f", env->xrot, env->yrot, env->zrot);
+	//	printf("xrot=%f, yrot=%f, zrot=%f", env->xrot, env->yrot, env->zrot);
 	while (i < 6)
 	{
 		if (env->xrot != 0)
@@ -113,17 +107,15 @@ void			rotate(t_env *env)
 void			scale(t_env *env, t_drw *drw)
 {
 	int i;
+	int	mapmax;
 
 	i = 0;
-//	printf("ps 0->[%d] 1->[%d] 2->[%d] 3->[%d] 4->[%d] 5->[%d]\n", env->ps[0], env->ps[1], env->ps[2], env->ps[3], env->ps[4], env->ps[5]);
 	if (env->reinit == false)
 	{
-		env->mapmax = (env->msize[0] >= env->msize[1]) ? env->msize[0] : env->msize[1];
+		mapmax = (env->msize[0] >= env->msize[1]) ? env->msize[0] : env->msize[1];
 		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
-		env->scale = env->winmax / (env->mapmax + 2);
-		if (env->msize[2] == 0)
-			env->msize[2] = 1;
-		env->zscale = (env->mapmax / env->msize[2]) * 4;
+		env->scale = env->winmax / (mapmax + 2);
+		env->zscale = ((env->msize[2] / mapmax) > 1) ? (env->msize[2] / mapmax) * 4 : 4;
 //		printf("msize[2] = %d, mapmax = %d\n", env->msize[2], env->mapmax);
 //		printf("winmax=%d, mapmax =%d", env->winmax, env->mapmax);
 	}
@@ -131,7 +123,7 @@ void			scale(t_env *env, t_drw *drw)
 	{
 		env->ps[i] = (env->ps[i] * env->scale) + env->scale;
 		env->ps[i + 1] = (env->ps[i + 1] * env->scale) + env->scale;
-		printf("scale = %d, zscale = %d\n", env->scale, env->zscale);
+//		printf("scale = %d, zscale = %d\n", env->scale, env->zscale);
 		env->ps[i + 2] = (env->ps[i + 2]) * (env->scale / env->zscale);
 		i = i + 3;
 	}
