@@ -21,6 +21,7 @@ void				exit_fdf(t_env *env)
 	exit(0);
 }
 
+
 int					key_controls(int keycode, t_env *env)
 {
 	if (keycode == KEY_ESC)

@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/28 19:36:34 by dgerard           #+#    #+#             */
-/*   Updated: 2017/05/31 14:21:31 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/06/30 15:19:03 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,13 @@ void			fill_array(int ***map, int fd, char *filename, t_env *env)
 			}
 			while (line[i] != '\0' && line[i] != ' ' && line[i] != '\n')
 				i++;
-			if (line[i] != '\0') //changed here
+			if (line[i] != '\0')
 				i++;
-			//it can go past the null byte here so it's throwing off the x iterator... but only sometimes
 		}
-		printf("%d, %d\n", env->msize[0], x);
 		if (x != env->msize[0])
 		{
 			env->valid_file = false;
-			printf("here8\n");
+			printf("fuck this shittt\n");
 		}
 		y++;
 	}

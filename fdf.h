@@ -60,6 +60,10 @@ typedef struct	s_drw
 	int			rise;
 	int			run;
 	int			slope;
+	int			drop;
+	int			adjust;
+	int			level;
+	int			level_adjust;
 }				t_drw;
 
 typedef	struct	s_env
@@ -87,6 +91,9 @@ void			draw_web(t_env *env);
 void			draw_line(t_env *env, t_drw *drw);
 int				**read_file(char *filename, t_env *env);
 int				key_controls(int keycode, t_env *env);
+void			rotate(t_env *env);
+void			matrices(char c, int i, t_env *env);
+void			project(t_env *env, t_drw *drw);
 void			reinit(t_env *env);
 void			exit_fdf(t_env *env);
 
