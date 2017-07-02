@@ -25,6 +25,7 @@ void		valid_file(char *filename, t_env *env)
 void				reinit(t_env *env)
 {
 	mlx_clear_window(env->mlx, env->window);
+//	ft_memdel((void**)&env->drop);
 	ft_memdel((void **)&env->ps);
 	draw_web(env);
 }

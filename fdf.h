@@ -51,6 +51,11 @@ typedef struct s_clr
 }				t_clr;
 */
 
+enum e_xy{
+	X,
+	Y
+};
+
 typedef struct	s_drw
 {
 	int			x0;
@@ -60,10 +65,9 @@ typedef struct	s_drw
 	int			rise;
 	int			run;
 	int			slope;
-	int			drop;
 	int			adjust;
 	int			level;
-	int			level_adjust;
+//	int			level_adjust;
 }				t_drw;
 
 typedef	struct	s_env
@@ -78,6 +82,7 @@ typedef	struct	s_env
 	float		yrot;
 	float		zrot;
 	int			*ps;
+//	int			*drop;
 	int			winmax;
 	int			scale;
 	int			zscale;

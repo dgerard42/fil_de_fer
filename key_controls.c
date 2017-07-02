@@ -18,6 +18,7 @@ void				exit_fdf(t_env *env)
 	ft_memdel((void **)&env->ps);
 	ft_2dfreearray((void **)env->map, env->msize[1]);
 	ft_memdel((void **)&env->msize);
+//	ft_memdel((void **)&env->drop);
 	exit(0);
 }
 
