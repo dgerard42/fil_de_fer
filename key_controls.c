@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 17:34:17 by dgerard           #+#    #+#             */
-/*   Updated: 2017/06/07 17:34:28 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/07/02 13:17:27 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,24 @@ void				exit_fdf(t_env *env)
 	ft_memdel((void **)&env->ps);
 	ft_2dfreearray((void **)env->map, env->msize[1]);
 	ft_memdel((void **)&env->msize);
-//	ft_memdel((void **)&env->drop);
 	exit(0);
 }
 
+void				rotational(int keycode, t_env *env)
+{
+	if (keycode == KEY_U)
+		env->xrot += 0.03;
+	if (keycode == KEY_H)
+		env->xrot -= 0.03;
+	if (keycode == KEY_I)
+		env->yrot += 0.03;
+	if (keycode == KEY_J)
+		env->yrot -= 0.03;
+	if (keycode == KEY_O)
+		env->zrot += 0.03;
+	if (keycode == KEY_K)
+		env->zrot -= 0.03;
+}
 
 int					key_controls(int keycode, t_env *env)
 {
@@ -36,21 +50,12 @@ int					key_controls(int keycode, t_env *env)
 	if (keycode == KEY_D)
 		env->xoffset += (env->winmax / 42);
 	if (keycode == KEY_Z)
-		env->scale += 10;
+		env->scale += 6;
 	if (keycode == KEY_X)
-		env->scale -= 10;
-	if (keycode == KEY_U)
-		env->xrot += 0.2;
-	if (keycode == KEY_H)
-		env->xrot -= 0.2;
-	if (keycode == KEY_I)
-		env->yrot += 0.2;
-	if (keycode == KEY_J)
-		env->yrot -= 0.2;
-	if (keycode == KEY_O)
-		env->zrot += 0.2;
-	if (keycode == KEY_K)
-		env->zrot -= 0.2;
+		env->scale -= 6;
+	if (keycode == KEY_U || keycode == KEY_H || keycode == KEY_I ||
+		keycode == KEY_J || keycode == KEY_O || keycode == KEY_K)
+		rotational(keycode, env);
 	env->reinit = true;
 	reinit(env);
 	return (0);

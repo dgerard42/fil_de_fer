@@ -21,7 +21,6 @@ void			project(t_env *env, t_drw *drw)
 		drw->y0 = env->ps[1];
 		drw->x1 = env->ps[3];
 		drw->y1 = env->ps[4];
-//		env->drop = ft_intarraynew(2);
 		draw_line(env, drw);
 	}
 }

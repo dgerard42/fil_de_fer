@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/28 12:21:31 by dgerard           #+#    #+#             */
-/*   Updated: 2017/07/01 22:19:46 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/07/02 13:13:52 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,27 @@ void				swap_points(t_drw *drw)
 	ft_bitswap((unsigned char *)&(drw->y0), ((unsigned char *)&drw->y1), 4);
 }
 
+void				setup(t_drw *drw)
+{
+	drw->rise = (drw->y1) - (drw->y0);
+	drw->run = (drw->x1) - (drw->x0);
+	drw->adjust = (drw->rise * drw->run >= 0) ? 1 : -1;
+//	drw->color = 0x00FF00;
+//	drw->color = (drw->z0 == 0 && drw->z1 == 0) ? 0xFF0000 : 0xFFFF00;
+//	printf("color = %d\n", drw->color);
+}
+
 void				draw_line(t_env *env, t_drw *drw)
 {
 	int		drop[2];
 
-	drw->rise = (drw->y1) - (drw->y0);
-	drw->run = (drw->x1) - (drw->x0);
+	setup(drw);
 	drop[0] = abs(drw->rise * 2);
 	drop[1] = abs(drw->run * 2);
 	if (drw->run == 0)
 		no_run(env, drw);
 	else
 	{
-		drw->adjust = (drw->rise * drw->run >= 0) ? 1 : -1;
 		if (abs(drw->rise) <= abs(drw->run))
 		{
 			drw->level = abs(drw->run);
@@ -83,23 +91,3 @@ void				draw_line(t_env *env, t_drw *drw)
 		}
 	}
 }
-
-/*
-int					main(int argc, char **argv)
-{
-	if (argc == 5)
-	{
-		t_drw drw;
-		t_env env;
-
-		env.mlx = mlx_init();
-		env.window = mlx_new_window(env.mlx, WIN_LEN, WIN_HI, "hullo");
-		drw.x0 = ft_atoi(argv[1]);
-		drw.y0 = ft_atoi(argv[2]);
-		drw.x1 = ft_atoi(argv[3]);
-		drw.y1 = ft_atoi(argv[4]);
-		draw_line(&env, &drw);
-		mlx_loop(env.mlx);
-	}
-}
-*/

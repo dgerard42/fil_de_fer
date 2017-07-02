@@ -11,18 +11,17 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+
 /*
-#include <stdio.h>
-void			is_map(int **map)
+void			is_map(int **map, t_env *env)
 {
 	int		y;
 	int		x;
-
 	y = 0;
 	x = 0;
-	while (y < 10)
+	while (y < env->msize[1])
 	{
-		while(x < 14)
+		while(x < env->msize[0])
 		{
 			printf("%d,", map[y][x]);
 			x++;
@@ -34,13 +33,34 @@ void			is_map(int **map)
 }
 */
 
-void			fill_array(int ***map, int fd, char *filename, t_env *env)
+int				line_fill(t_env *env, char *line, int i, int y)
 {
-	int	i;
-	int y;
 	int x;
-	int	x_len;
-	char *line;
+
+	x = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != ' ' && line[i] != '\n')
+		{
+			env->map[y][x++] = ft_atoi(line + i);
+			if (abs(ft_atoi(line + i)) > env->msize[2])
+				env->msize[2] = ft_atoi(line + i);
+		}
+		while (line[i] != '\0' && line[i] != ' ' && line[i] != '\n')
+			i++;
+		if (line[i] != '\0')
+			i++;
+	}
+	return (x);
+}
+
+void			fill_array(int fd, char *filename, t_env *env)
+{
+	int		i;
+	int		y;
+	int		x;
+	int		x_len;
+	char	*line;
 
 	y = 0;
 	x_len = 0;
@@ -48,32 +68,16 @@ void			fill_array(int ***map, int fd, char *filename, t_env *env)
 	while (get_next_line(fd, &line) > 0)
 	{
 		i = 0;
-		x = 0;
-		while(line[i] != '\0')
-		{
-			if (line[i] != ' ' && line[i] != '\n')
-			{
-				(*map)[y][x++] = ft_atoi(line + i);
-				if (abs(ft_atoi(line + i)) > env->msize[2])
-					env->msize[2] = ft_atoi(line + i);
-			}
-			while (line[i] != '\0' && line[i] != ' ' && line[i] != '\n')
-				i++;
-			if (line[i] != '\0')
-				i++;
-		}
+		x = line_fill(env, line, i, y);
 		if (x != env->msize[0])
-		{
 			env->valid_file = false;
-			printf("fuck this shittt\n");
-		}
 		y++;
 	}
 	ft_memdel((void **)&line);
 	close(fd);
 }
 
-int				**read_file(char *filename, t_env *env)
+void			read_file(char *filename, t_env *env)
 {
 	int		i;
 	int		fd;
@@ -88,43 +92,15 @@ int				**read_file(char *filename, t_env *env)
 		env->msize[1]++;
 	while (line[i] != '\0')
 	{
-		if(line[i] != ' ' && line[i] != '\n')
+		if (line[i] != ' ' && line[i] != '\n')
 			env->msize[0]++;
-		while(line[i] != ' ' && line[i] != '\n' && line[i] != '\0')
+		while (line[i] != ' ' && line[i] != '\n' && line[i] != '\0')
 			i++;
 		i++;
 	}
-	map = ft_2dintarray(env->msize[1], env->msize[0]);
+	env->map = ft_2dintarray(env->msize[1], env->msize[0]);
 	close(fd);
 	ft_memdel((void**)&line);
-	fill_array(&map, fd, filename, env);
-	return (map);
+	fill_array(fd, filename, env);
+//	is_map(env->map, env);
 }
-
-/*
-int				main(int argc, char **argv)
-{
-	if (argc == 2)
-	{
-		t_env	env;
-		int		**res;
-		int		y;
-		int		x;
-
-		y = 0;
-		x = 0;
-		res = read_file(argv[1], &env);
-		while (y < (env.msize[1]))
-		{
-			while(x < (env.msize[0]))
-			{
-				printf("%d,", res[y][x]);
-				x++;
-			}
-			printf("\n");
-			y++;
-			x = 0;
-		}
-	}
-}
-*/

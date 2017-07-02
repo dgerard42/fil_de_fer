@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 17:19:59 by dgerard           #+#    #+#             */
-/*   Updated: 2017/06/30 17:20:12 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/07/02 13:15:36 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			draw_web(t_env *env)
 {
 	int		x;
 	int		y;
-	int 	twice;
+	int		twice;
 	t_drw	drw;
 
 	twice = -1;
@@ -84,6 +84,10 @@ void			draw_web(t_env *env)
 			while ((x + 1) < ((twice == 0) ? (env->msize[0]) : (env->msize[1])))
 			{
 				populate(y, x, twice, env);
+//				drw.z0 = env->ps[2];
+//				drw.z1 = env->ps[5];
+//				printf("%d, %d\n", env->ps[2], env->ps[5]);
+//				printf("%d, %d\n", drw.z0, drw.z1);
 				scale(env, &drw);
 				move(env);
 				rotate(env);
