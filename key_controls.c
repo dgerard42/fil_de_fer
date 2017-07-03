@@ -42,17 +42,17 @@ int					key_controls(int keycode, t_env *env)
 	if (keycode == KEY_ESC)
 		exit_fdf(env);
 	if (keycode == KEY_W)
-		env->yoffset += (env->winmax / 42);
+		env->yoffset += (env->winmax / 100);
 	if (keycode == KEY_A)
-		env->xoffset -= (env->winmax / 42);
+		env->xoffset -= (env->winmax / 100);
 	if (keycode == KEY_S)
-		env->yoffset -= (env->winmax / 42);
+		env->yoffset -= (env->winmax / 100);
 	if (keycode == KEY_D)
-		env->xoffset += (env->winmax / 42);
+		env->xoffset += (env->winmax / 100);
 	if (keycode == KEY_Z)
-		env->scale += 6;
+		env->scale += 4;
 	if (keycode == KEY_X)
-		env->scale -= 6;
+		env->scale -= 4;
 	if (keycode == KEY_U || keycode == KEY_H || keycode == KEY_I ||
 		keycode == KEY_J || keycode == KEY_O || keycode == KEY_K)
 		rotational(keycode, env);

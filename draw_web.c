@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 17:19:59 by dgerard           #+#    #+#             */
-/*   Updated: 2017/07/02 13:15:36 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/07/02 19:11:17 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void			scale(t_env *env, t_drw *drw)
 		env->winmax = (WIN_HI >= WIN_LEN) ? WIN_HI : WIN_LEN;
 		env->scale = env->winmax / (mapmax + 2);
 		env->zscale = ((env->msize[2] / mapmax) > 1) ?
-			(env->msize[2] / mapmax) * 4 : 4;
+			(env->msize[2] / mapmax) * 3 : 3;
 	}
 	while (i < 6)
 	{
@@ -83,16 +83,13 @@ void			draw_web(t_env *env)
 			x = 0;
 			while ((x + 1) < ((twice == 0) ? (env->msize[0]) : (env->msize[1])))
 			{
-				populate(y, x, twice, env);
-//				drw.z0 = env->ps[2];
-//				drw.z1 = env->ps[5];
-//				printf("%d, %d\n", env->ps[2], env->ps[5]);
-//				printf("%d, %d\n", drw.z0, drw.z1);
+				populate(y, x++, twice, env);
+				drw.z0 = env->ps[2];
+				drw.z1 = env->ps[5];
 				scale(env, &drw);
 				move(env);
 				rotate(env);
 				project(env, &drw);
-				x++;
 			}
 		}
 	}

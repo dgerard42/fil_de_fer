@@ -37,38 +37,21 @@
 # define KEY_O				31
 # define KEY_K				40
 
-/*
-typedef struct s_clr
-{
-	int			start_color;
-	int			end_color;
-	int			color_max;
-	int			p_diff;
-	int			c_bucket;
-	int			c_drop;
-	int			c_level;
-	int			color_diff;
-}				t_clr;
-
-enum e_xy{
-	X,
-	Y
-};
-*/
-
 typedef struct	s_drw
 {
 	int			x0;
 	int			y0;
-//	int			z0;
+	int			z0;
 	int			x1;
 	int			y1;
-//	int			z1;
+	int			z1;
 	int			rise;
 	int			run;
 	int			slope;
 	int			adjust;
 	int			level;
+	int			clr;
+	int			clr_adj;
 }				t_drw;
 
 typedef	struct	s_env

@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/28 12:21:31 by dgerard           #+#    #+#             */
-/*   Updated: 2017/07/02 13:13:52 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/07/02 19:08:33 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void				no_run(t_env *env, t_drw *drw)
 	if (drw->y1 < drw->y0)
 		ft_bitswap((unsigned char *)&(drw->y0), (unsigned char *)&(drw->y1), 4);
 	while (drw->y0 < drw->y1)
-		mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, 0x00FF00);
+		mlx_pixel_put(env->mlx, env->window, drw->x0, drw->y0++, drw->clr);
 }
 
 void				engine(t_env *env, t_drw *drw, int riru, int *drop)
@@ -36,9 +36,10 @@ void				engine(t_env *env, t_drw *drw, int riru, int *drop)
 	while (a0 != a1)
 	{
 		if (riru == 0)
-			mlx_pixel_put(env->mlx, env->window, a0++, b0, 0x00FF00);
+			mlx_pixel_put(env->mlx, env->window, a0++, b0, drw->clr);
 		if (riru == 1)
-			mlx_pixel_put(env->mlx, env->window, b0, a0++, 0x00FF00);
+			mlx_pixel_put(env->mlx, env->window, b0, a0++, drw->clr);
+		drw->clr = (drw->clr != 0xFF0000) ? drw->clr += drw->clr_adj : drw->clr;
 		bucket += drop[riru];
 		if (bucket >= drw->level)
 		{
@@ -59,9 +60,8 @@ void				setup(t_drw *drw)
 	drw->rise = (drw->y1) - (drw->y0);
 	drw->run = (drw->x1) - (drw->x0);
 	drw->adjust = (drw->rise * drw->run >= 0) ? 1 : -1;
-//	drw->color = 0x00FF00;
-//	drw->color = (drw->z0 == 0 && drw->z1 == 0) ? 0xFF0000 : 0xFFFF00;
-//	printf("color = %d\n", drw->color);
+	drw->clr = (drw->z0 == 0 && drw->z1 == 0) ? 0xFF0000 : 0xFF00FF;
+	drw->clr_adj = (drw->z0 == drw->z1) ? 0 : -1;
 }
 
 void				draw_line(t_env *env, t_drw *drw)
