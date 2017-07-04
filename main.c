@@ -12,10 +12,10 @@
 
 #include "fdf.h"
 
-void			valid_file(char *filename, t_env *env)
+void			valid_file(char *filename, t_env *env, int argc)
 {
 	env->valid_file = true;
-	if (!(ft_strstr(filename, ".fdf")))
+	if (argc != 2 || (!(ft_strstr(filename, ".fdf"))))
 	{
 		ft_putstr("Error\n");
 		exit(0);
@@ -45,7 +45,7 @@ int				main(int argc, char **argv)
 
 	env.mlx = mlx_init();
 	env.reinit = false;
-	valid_file(argv[1], &env);
+	valid_file(argv[1], &env, argc);
 	read_file(argv[1], &env);
 	if (env.valid_file == false)
 	{

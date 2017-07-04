@@ -6,7 +6,7 @@
 /*   By: dgerard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/28 19:36:34 by dgerard           #+#    #+#             */
-/*   Updated: 2017/07/02 19:18:32 by dgerard          ###   ########.fr       */
+/*   Updated: 2017/07/02 19:40:21 by dgerard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			fill_array(int fd, char *filename, t_env *env)
 
 	y = 0;
 	fd = open(filename, O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
+	while (fd > 1 && get_next_line(fd, &line) > 0)
 	{
 		i = 0;
 		x = line_fill(env, line, i, y);
@@ -66,9 +66,10 @@ void			read_file(char *filename, t_env *env)
 	line = NULL;
 	env->msize = ft_intarraynew(3);
 	fd = open(filename, O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
+	env->valid_file = (fd < 1) ? false : true;
+	while (fd > 1 && get_next_line(fd, &line) > 0)
 		env->msize[1]++;
-	while (line[i] != '\0')
+	while (fd > 1 && line[i] != '\0')
 	{
 		if (line[i] != ' ' && line[i] != '\n')
 			env->msize[0]++;
